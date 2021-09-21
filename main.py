@@ -9,6 +9,9 @@ from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.slider import Slider
+from kivy.uix.widget import Widget
+from kivy.animation import Animation
+from kivy.animation import AnimationTransition
 
 from pidev.MixPanel import MixPanel
 from pidev.kivy.PassCodeScreen import PassCodeScreen
@@ -72,7 +75,9 @@ class MainScreen(Screen):
             return
 
 
-
+    def animationGo(self):
+        anim = Animation(x=100, y=100)
+        anim.start(self.move)
 
     def pressed(self):
         """

@@ -2,7 +2,9 @@
     #: import time __main__.time
     counter: counter
     change: change
+    move: move
     name: 'main'
+    on_enter: root.animationGo()
     FloatLayout:
         size_hint: None, None
 
@@ -35,12 +37,14 @@
         on_press: root.motorToggle()
 
     ImageButton:
+        id: move
         source: 'beet.jpg'
         size_hint: None, None
         pos_hint: {'left':1, 'top':0.5}
         allow_stretch: False
         keep_ratio: True
         on_press: root.admin_action()
+
 
     DPEAButton:
         id: change

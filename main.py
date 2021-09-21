@@ -6,7 +6,9 @@ import os
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
+from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.slider import Slider
 
 from pidev.MixPanel import MixPanel
 from pidev.kivy.PassCodeScreen import PassCodeScreen
@@ -14,6 +16,7 @@ from pidev.kivy.PauseScreen import PauseScreen
 from pidev.kivy import DPEAButton
 from pidev.kivy import ImageButton
 from pidev.kivy.selfupdatinglabel import SelfUpdatingLabel
+
 
 from datetime import datetime
 
@@ -47,6 +50,29 @@ class MainScreen(Screen):
     """
     Class to handle the main screen and its associated touch events
     """
+    count = 0
+    OnOff = True
+    motor = ""
+    change = ObjectProperty(None)
+    def pressedCount(self):
+
+        self.count += 1
+        self.counter.text = str(self.count)
+
+    def motorToggle(self):
+        if self.OnOff == True:
+            self.motor = "off"
+            self.change.text = self.motor
+            self.OnOff = False
+            return
+        else:
+            self.motor = "on"
+            self.change.text = self.motor
+            self.OnOff = True
+            return
+
+
+
 
     def pressed(self):
         """
@@ -61,6 +87,7 @@ class MainScreen(Screen):
         This method is called from pidev/kivy/PassCodeScreen.kv
         :return: None
         """
+
         SCREEN_MANAGER.current = 'passCode'
 
 

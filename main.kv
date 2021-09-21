@@ -1,32 +1,72 @@
 <MainScreen>:
     #: import time __main__.time
-
+    counter: counter
+    change: change
     name: 'main'
     FloatLayout:
         size_hint: None, None
 
+    Slider:
+        id: Slider
+        min: 0
+        max: 100
+        step: 1
+        orientation: 'horizontal'
+        x: root.width * 0
+        y: root.height * 0.35
+
+
     DPEAButton:
-        id: test_button
-        text: 'test'
+        id: counter
+        text: "0"
         size: 100, 100
         x: root.width * 0.75
         y: root.height * 0.5
-        color: 0, 1, 0, 1
-        on_press: root.pressed()
+        color: 0.25, 0.6, 0.1, 0.3
+        on_press: root.pressedCount()
 
     DPEAButton:
-        text: "test2"
+        id: toggle
+        text: "toggle"
+        size: 100, 100
+        x: root.width * 0.75
+        y: root.height * 0.25
+        color: 0, 1, 0, 1
+        on_press: root.motorToggle()
+
+    ImageButton:
+        source: 'beet.jpg'
+        size_hint: None, None
+        pos_hint: {'left':1, 'top':0.5}
+        allow_stretch: False
+        keep_ratio: True
+        on_press: root.admin_action()
+
+    DPEAButton:
+        id: change
+        text: "On"
+        size: 100, 100
+        x: root.width * 0.75
+        y: root.height * 0.75
+        color: 0, 1, 0, 1
+
+
+
+    DPEAButton:
+        id:btn
+        text: "I am" if btn.state == "normal" else "Awesome"
         size: 100, 100
         x: root.width * 0.25
         y: root.height * 0.5
         color: 1, 0, 0, 1
         on_press: root.pressed()
 
+
     SelfUpdatingLabel:
-        id: time_label
+        id: sldrValue
         size_hint: None, None
         font_size: 30
-        update_property: time.now
+        update_property: Slider.value
         update_property_parameters: None
         center_x: root.width * 0.5
         center_y: root.height * 0.45

@@ -12,13 +12,15 @@ from kivy.uix.slider import Slider
 from kivy.uix.widget import Widget
 from kivy.animation import Animation
 from kivy.animation import AnimationTransition
-
+from threading import Thread
+from time import sleep
 from pidev.MixPanel import MixPanel
 from pidev.kivy.PassCodeScreen import PassCodeScreen
 from pidev.kivy.PauseScreen import PauseScreen
 from pidev.kivy import DPEAButton
 from pidev.kivy import ImageButton
 from pidev.kivy.selfupdatinglabel import SelfUpdatingLabel
+from pidev.Joystick import Joystick
 
 
 from datetime import datetime
@@ -54,13 +56,30 @@ class MainScreen(Screen):
     Class to handle the main screen and its associated touch events
     """
     count = 0
+    joy = Joystick(0, False)
     OnOff = True
+    joy_x_val = 0.0
+    joy_y_val = 0.0
     motor = ""
     change = ObjectProperty(None)
+
     def pressedCount(self):
 
         self.count += 1
         self.counter.text = str(self.count)
+
+
+    def joy_update(self):  # This should be inside the MainScreen Class
+        while True:
+            for i in range(0,20):
+                self.joy_label.x += (self.joy.get_axis('x') * 5)
+                sleep(0.0001)
+            for i in range(0,20):
+                self.joy_label.y -= (self.joy.get_axis('y') * 5)
+                sleep(.0001)
+
+    def start_joy_thread(self):  # This should be inside the MainScreen Class
+        Thread(target=self.joy_update).start()
 
     def motorToggle(self):
         if self.OnOff == True:
@@ -75,8 +94,9 @@ class MainScreen(Screen):
             return
 
 
+
     def animationGo(self):
-        anim = Animation(x=100, y=100)
+        anim = Animation(x=400, y=400) + Animation(size=(400,400), duration = 1.) + Animation(x=20, y=50)
         anim.start(self.move)
 
     def pressed(self):
@@ -93,7 +113,7 @@ class MainScreen(Screen):
         :return: None
         """
 
-        SCREEN_MANAGER.current = 'passCode'
+        SCREEN_MANAGER.current = ADMIN_SCREEN_NAME
 
 
 class AdminScreen(Screen):
@@ -137,6 +157,10 @@ class AdminScreen(Screen):
         :return: None
         """
         quit()
+
+    def animationGo2(self):
+        anim = Animation(x=100, y=100) + Animation(size=(50,50), duration = 1.) + Animation(x=50, y=50)
+        anim.start(self.move2)
 
 
 """

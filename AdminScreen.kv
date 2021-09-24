@@ -1,9 +1,12 @@
 <AdminScreen>:
     name: 'admin'
+    move2: move2
+    on_enter: root.animationGo2()
     FloatLayout:
         size_hint: None, None
 
     ImageButton:
+        id: move2
         source: 'beet.jpg'
         size_hint: 1, 1
         pos_hint: {'left':1, 'top':0.9}

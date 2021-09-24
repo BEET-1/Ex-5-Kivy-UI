@@ -1,10 +1,12 @@
 <MainScreen>:
     #: import time __main__.time
     counter: counter
+    joy_label: joy_label
     change: change
     move: move
     name: 'main'
-    on_enter: root.animationGo()
+    on_enter: root.start_joy_thread()
+    # on_enter: root.animationGo()
     FloatLayout:
         size_hint: None, None
 
@@ -78,3 +80,17 @@
         bold: True
         outline_width: self.font_size * 0.1
         outline_color: 0, 0, 0
+
+    ImageButton:
+        id: joy_label
+        source: 'beet.jpg'
+        size_hint: None, None
+        center_x: root.width * 0.5
+        center_y: root.height * 0.7
+        allow_stretch: False
+        keep_ratio: True
+        on_press: root.admin_action()
+
+
+
+
